@@ -2,14 +2,16 @@ package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
+import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserProvider {
 
     @Autowired
     private UserRepository userRepository;
@@ -61,5 +63,20 @@ public class UserServiceImpl {
         user.setBirthdate(userDto.birthdate());
         user = userRepository.save(user);
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public Optional<User> getUser(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 }

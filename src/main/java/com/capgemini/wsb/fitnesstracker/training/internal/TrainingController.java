@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,13 +33,13 @@ public class TrainingController {
     }
 
     @GetMapping("/completed/{date}")
-    public ResponseEntity<List<TrainingDto>> getCompletedTrainings(@PathVariable LocalDate date) {
+    public ResponseEntity<List<TrainingDto>> getCompletedTrainings(@PathVariable Date date) {
         List<TrainingDto> trainings = trainingService.getCompletedTrainings(date);
         return ResponseEntity.ok(trainings);
     }
 
     @GetMapping("/activity/{activityType}")
-    public ResponseEntity<List<TrainingDto>> getTrainingsByActivityType(@PathVariable String activityType) {
+    public ResponseEntity<List<TrainingDto>> getTrainingsByActivityType(@PathVariable ActivityType activityType) {
         List<TrainingDto> trainings = trainingService.getTrainingsByActivityType(activityType);
         return ResponseEntity.ok(trainings);
     }
@@ -51,8 +51,8 @@ public class TrainingController {
     }
 
     @GetMapping("/{distance}")
-    public ResponseEntity<TrainingDto> getTrainingByDistance(@PathVariable Double distance) {
-        TrainingDto updatedTraining = trainingService.updateTraining(id, trainingDto);
-        return ResponseEntity.ok(updatedTraining);
+    public ResponseEntity<List<TrainingDto>> getTrainingByDistance(@PathVariable Double distance) {
+        List<TrainingDto> distanceTrainings = trainingService.getTrainingsByDistance(distance);
+        return ResponseEntity.ok(distanceTrainings);
     }
 }

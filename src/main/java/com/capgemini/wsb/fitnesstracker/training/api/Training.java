@@ -1,45 +1,60 @@
 package com.capgemini.wsb.fitnesstracker.training.api;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
+import com.capgemini.wsb.fitnesstracker.user.api.User;
+import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
+@Table(name = "trainings")
 public class Training {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String activityType;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "start_time")
     private Date startTime;
+    @Column(name = "end_time")
     private Date endTime;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "activity_type")
+    private ActivityType activityType;
+    @Column(name = "distance")
     private double distance;
+    @Column(name = "average_speed")
     private double calories;
-    private Long userId;
 
     // Konstruktor bezargumentowy wymagany przez JPA
     public Training() {}
 
     // Konstruktor z argumentami
-    public Training(String activityType, Date startTime, Date endTime, double distance, double calories, Long userId) {
-        this.activityType = activityType;
+
+    public Training(User user, Date startTime, Date endTime, ActivityType activityType, double distance, double calories) {
+        this.user = user;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.activityType = activityType;
         this.distance = distance;
         this.calories = calories;
-        this.userId = userId;
     }
 
+
     // Konstruktor z wszystkimi argumentami, w tym id
-    public Training(Long id, String activityType, Date startTime, Date endTime, double distance, double calories, Long userId) {
+
+
+    public Training(Long id, User user, Date startTime, Date endTime, ActivityType activityType, double distance, double calories) {
         this.id = id;
-        this.activityType = activityType;
+        this.user = user;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.activityType = activityType;
         this.distance = distance;
         this.calories = calories;
-        this.userId = userId;
     }
 
     // Gettery i Settery
@@ -51,11 +66,11 @@ public class Training {
         this.id = id;
     }
 
-    public String getActivityType() {
+    public ActivityType getActivityType() {
         return activityType;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
 
@@ -91,11 +106,11 @@ public class Training {
         this.calories = calories;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

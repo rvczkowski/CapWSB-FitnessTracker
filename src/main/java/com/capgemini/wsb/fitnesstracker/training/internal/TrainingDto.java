@@ -1,26 +1,30 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class TrainingDto {
     private Long id;
-    private String activityType;
-    private LocalDate date;
-    private String duration;
-    private double distance;
     private Long userId;
+    private Date startTime;
+    private Date endTime;
+    private ActivityType activityType;
+    private double distance;
+    private double calories;
 
     // Konstruktor bezargumentowy
     public TrainingDto() {}
 
     // Konstruktor z argumentami
-    public TrainingDto(Long id, String activityType, LocalDate date, String duration, double distance, Long userId) {
+
+
+    public TrainingDto(Long id, Long userId, Date startTime, Date endTime, ActivityType activityType, double distance, double calories) {
         this.id = id;
-        this.activityType = activityType;
-        this.date = date;
-        this.duration = duration;
-        this.distance = distance;
         this.userId = userId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.activityType = activityType;
+        this.distance = distance;
+        this.calories = calories;
     }
 
     // Gettery i Settery
@@ -32,28 +36,36 @@ public class TrainingDto {
         this.id = id;
     }
 
-    public String getActivityType() {
+    public ActivityType getActivityType() {
         return activityType;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public double getCalories() {
+        return calories;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setCalories(double calories) {
+        this.calories = calories;
     }
 
-    public String getDuration() {
-        return duration;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public double getDistance() {
